@@ -1,0 +1,28 @@
+{
+  "name": "devtinder",
+  "version": "1.0.0",
+  "description": "tinder for devs",
+  "homepage": "https://github.com/Kunalparihar2494/DevTinder#readme",
+  "bugs": {
+    "url": "https://github.com/Kunalparihar2494/DevTinder/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kunalparihar2494/DevTinder.git"
+  },
+  "license": "ISC",
+  "author": "Kunal Parihar",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.0",
+    "validator": "^13.15.15"
+  }
+}
