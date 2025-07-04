@@ -4,7 +4,7 @@ const validator = require("validator");
 const bcrypt = require("bcrypt");
 const PROFILE_IMG = require("../utils/images");
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema(
     emailId: {
       type: String,
       required: true,
-      lowerCase: true,
+      lowercase: true,
       unique: true,
       trim: true,
       validate(value) {
@@ -67,6 +67,8 @@ const userSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.index({ firstName: 1, lastName: 1 });
 
 userSchema.methods.getJWT = function () {
   const user = this;

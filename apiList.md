@@ -22,4 +22,4 @@ connectionrequestRouter
 
 
 
-STATUS: ignore, intrested, accepted, rejected
+STATUS: pass, like, accepted, rejected

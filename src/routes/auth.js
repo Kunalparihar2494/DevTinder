@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/user");
 const { validateSignUpData } = require("../utils/validation");
 const bcrypt = require("bcrypt");
+const { userAuth } = require("../middlewares/auth");
 const authRouter = express.Router();
 
 authRouter.post("/signup", async (req, res) => {
@@ -24,7 +25,6 @@ authRouter.post("/signup", async (req, res) => {
   }
 });
 
-
 authRouter.post("/login", async (req, res) => {
   try {
     const { emailId, password } = req.body;
@@ -42,6 +42,35 @@ authRouter.post("/login", async (req, res) => {
       } else {
         throw new Error("Paswword is not Valid");
       }
+    }
+  } catch (error) {
+    res.status(400).send("ERROR: " + error.message);
+  }
+});
+
+authRouter.post("/logout", async (req, res) => {
+  try {
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+    });
+    res.send("User logged out");
+  } catch (error) {
+    res.status(400).send("ERROR: " + error.message);
+  }
+});
+
+authRouter.patch("/changepassword", userAuth, async (req, res) => {
+  try {
+    const user = req.user;
+    const { password, newPassword } = req.body;
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (isPasswordValid) {
+      const passwordHash = await bcrypt.hash(newPassword, 10);
+      user.password = passwordHash;
+      await user.save();
+      res.send("Password Changed Successfully");
+    } else {
+      throw new Error("Paswword is not Valid");
     }
   } catch (error) {
     res.status(400).send("ERROR: " + error.message);
