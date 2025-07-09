@@ -7,7 +7,7 @@ const profileRouter = express.Router();
 profileRouter.get("/profile/view", userAuth, async (req, res) => {
   try {
     const user = req.user;
-    res.send("Show Profile " + user);
+    res.send(user);
   } catch (error) {
     res.status(400).send("ERROR: " + error.message);
   }
@@ -24,7 +24,7 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
       (key) => (loggenInUser[key] = req.body[key])
     );
 
-    // await loggenInUser.save();
+    await loggenInUser.save();
 
     res.json({
       message: "User Profile Updated Successfully.",
